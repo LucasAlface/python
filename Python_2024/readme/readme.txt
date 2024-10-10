@@ -11,3 +11,6 @@ matriz.py
 Criação e manipulação de matrizes
 
 dicinarios.py
+Imprimir chaves, valores e chaves com os valores
+
+funcoes.py

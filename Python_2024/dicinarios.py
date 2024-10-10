@@ -13,5 +13,5 @@ for k in aluno: # Imprime a chave
 for v in aluno.values(): # Imprime os valores
     print(v)
 
-for k,v in aluno.items(): 
+for k,v in aluno.items(): # Imprime a chave seguido do valor associado
     print(f'{k}: {v}')
