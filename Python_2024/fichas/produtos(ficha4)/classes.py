@@ -5,7 +5,7 @@ class ContaBancaria:
         self.saldo_inicial = saldo
         self.agencia = agencia
         self.emprestimo = False
-
+    
     def depositar(self,valor):
         self.saldo_inicial = self.saldo_inicial + valor
 
