@@ -32,6 +32,9 @@ Utilização da classe Pessoa para inserir dados, transformar em dicionário e c
 ler_dados.py
 Lê os dados do ficheiro .json criado no gravar_dados
 
+lista_pessoas.json
+Dados importados do ficheiro gravar_dados.py. Localização -> estudo -> pessoas -> gravar_dados.py
+
 
 
 FICHAS
