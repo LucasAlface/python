@@ -1,15 +1,22 @@
 # Este ficheiro vai ter as funções para o funcionamento do jogo
 
+import random
+from classes import NaveModelo, NaveAtual
+
+linhas_tabuleiro = 3 # Define quantas linhas tem o tabuleiro
+
 # Função para definir o tabuleiro
-def criar_tabuleiro(limite):
+def criar_tabuleiro(linhas):
     # Criar o tabuleiro como uma lista de listas
     tabuleiro = []
-    for x in range(limite):
+    for x in range(linhas):
         y = x * 2 + 1  # Função que define a quantidade de colunas que dada linha tem (y = colunas x = linha)
         linha = [" " for _ in range(y)]  # Inicializa cada linha com espaços
         tabuleiro.append(linha) # Adiciona os valores de cada linha
 
     return tabuleiro
+
+
 
 # Função para imprimir o tabuleiro
 def imprimir_tabuleiro(tabuleiro):
@@ -22,14 +29,49 @@ def imprimir_tabuleiro(tabuleiro):
         espacos = (largura_maxima - largura_linha) // 2  # Calcula espaços para centralizar
         print(" " * espacos + linha_formatada + "|") # Para cada linha imprime o número de " " necessários para centralizar
 
-# Exemplo de uso
-limite = 3
-tabuleiro = criar_tabuleiro(3)
 
 
-# Acessando um espaço e preenchendo valores
-tabuleiro[0][0] = "X"  # Linha 2, coluna 1
-tabuleiro[2][4] = "O"  # Linha 3, coluna 3
+# Método que faz 50 parágrafos para limpar a tela
+def limpa_tela():
+    print("\n" * 50)
 
-# Imprimir o tabuleiro com os valores
+
+
+# Método para criar a capa do início de jogo
+def mostrar_capa():
+    
+    limpa_tela()
+    
+    capa = """
+    ***********************************************
+    *                                             *
+    *          BEM-VINDO AO JOGO!                 *
+    *                                             *
+    ***********************************************
+            ███╗   ██╗ █████╗ ██╗   ██╗███████╗
+            ████╗  ██║██╔══██╗██║   ██║██╔════╝
+            ██╔██╗ ██║███████║██║   ██║█████╗  
+            ██║╚██╗██║██╔══██║╚██╗ ██╔╝██╔══╝  
+            ██║ ╚████║██║  ██║ ╚████╔╝ ███████╗
+            ╚═╝  ╚═══╝╚═╝  ╚═╝  ╚═══╝  ╚══════╝
+    
+    ***********************************************
+    *  Pressione qualquer tecla para começar...   *
+    ***********************************************
+    """
+    print(capa)
+    
+    input() # Aguarda que o utilizador pressione alguma tecla
+
+
+tabuleiro = criar_tabuleiro(linhas_tabuleiro)
+
+
+num_linha = random.randrange(linhas_tabuleiro)
+
+num_coluna = random.randrange(num_linha * 2 + 1)
+
+tabuleiro[num_linha][num_coluna] = "x"
+
 imprimir_tabuleiro(tabuleiro)
+    

@@ -5,11 +5,11 @@ from dicionarios import Cores # Dicionário com as cores
 
 # Super classe
 class NaveModelo:
-    def __init__(self, nome, cor, perdaEnergia, letra):
+    def __init__(self, nome, cor, letra):
         self.nome = nome
         self.cor = cor
         self.energia = 100
-        self.perdaEnergia = perdaEnergia
+        self.perdaEnergia = 10
         self.letra = letra
 
     # Método para atualizar a energia
@@ -23,8 +23,8 @@ class NaveModelo:
 
 # Classe filho
 class NaveAtual(NaveModelo):
-    def __init__(self, nome, cor, perdaEnergia, letra):
-        super().__init__(nome, cor, perdaEnergia, letra)
+    def __init__(self, nome, cor, letra):
+        super().__init__(nome, cor, letra)
         self.energiaExtra = 10 # A energia extra vai ser sempre 10
 
     # Método que devolve a informação do método da super classe com a cor correspondente
