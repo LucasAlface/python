@@ -1,3 +1,4 @@
+
 # Este ficheiro vai ter as classes usadas para o jogo
 
 from colorama import Fore, Style # Biblioteca com funções para adicionar cores
