@@ -1,4 +1,3 @@
-
 # Este ficheiro vai ter as classes usadas para o jogo
 
 from colorama import Fore, Style # Biblioteca com funções para adicionar cores
@@ -14,13 +13,13 @@ class NaveModelo:
         self.letra = letra
 
     # Método para atualizar a energia
-    def Energia_Atual(self):
+    def perda_energia(self):
         self.energia -= self.perdaEnergia
         return self.energia
     
     # Método para devolver a informação tratada
     def __str__(self):
-        return f'Nome: {self.nome} \nEnergia atual: {self.energia} \nLetra: {self.letra}'
+        return f'\n{self.nome} {self.energia}% {self.letra}'
 
 # Classe filho
 class NaveAtual(NaveModelo):
@@ -45,3 +44,10 @@ class NaveAtual(NaveModelo):
         return self.energia
 
 
+skibidi = NaveAtual("skibidi", "RED", "F")
+
+skibidi.perda_energia()
+skibidi.perda_energia()
+skibidi.perda_energia()
+
+print(skibidi.Info())
