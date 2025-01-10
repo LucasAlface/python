@@ -8,23 +8,83 @@ from colorama import Fore
 import re # Correção do tamanho de strings com cor
 
 # Variáveis globais
-linhas_tabuleiro = 3 # Define quantas linhas tem o tabuleiro
-num_jogadas = 0
-tiros_dados = 0
+linhas_tabuleiro = 3 
 
-Nave1 = NaveAtual("Aftonsparv", "GREEN", "A")
-Nave2 = NaveAtual("Ikea", "CYAN", "B")
-Nave3 = NaveAtual("Ikeia", "YELLOW", "C")    
+# Objetos
+Nave1 = NaveAtual("Aftonsparv", "GREEN", "A", 14, 100)
+Nave2 = NaveAtual("Ikea", "CYAN", "B", 12, 35)
+Nave3 = NaveAtual("Ikeia", "YELLOW", "C", 10, 20)    
 
+# Lista com os objetos
 Naves = [Nave1, Nave2, Nave3]
 
+
+# ****************** FUNÇÕES E MÉTODOS ******************
+
+
+# Método para criar a capa do início de jogo
+def capa():   
+    limpa_tela()
+    print( """
+    ***********************************************
+    *                                             *
+    *          BEM-VINDO AO JOGO!                 *
+    *                                             *
+    ***********************************************
+            ███╗   ██╗ █████╗ ██╗   ██╗███████╗
+            ████╗  ██║██╔══██╗██║   ██║██╔════╝
+            ██╔██╗ ██║███████║██║   ██║█████╗  
+            ██║╚██╗██║██╔══██║╚██╗ ██╔╝██╔══╝  
+            ██║ ╚████║██║  ██║ ╚████╔╝ ███████╗
+            ╚═╝  ╚═══╝╚═╝  ╚═╝  ╚═══╝  ╚══════╝
+    
+    ***********************************************
+    *  Pressione qualquer tecla para começar...   *
+    ***********************************************
+    """)
+    
+    input() # Aguarda que o utilizador pressione alguma tecla
+
+# Método com mensagem de vitória     
+def vencer():
+    limpa_tela()
+    print(""" 
+                  
+____    ____  _______ .__   __.   ______  _______      _______..___________. _______  __   __   __  
+\   \  /   / |   ____||  \ |  |  /      ||   ____|    /       ||           ||   ____||  | |  | |  | 
+ \   \/   /  |  |__   |   \|  | |  ,----'|  |__      |   (----``---|  |----`|  |__   |  | |  | |  | 
+  \      /   |   __|  |  . `  | |  |     |   __|      \   \        |  |     |   __|  |  | |  | |  | 
+   \    /    |  |____ |  |\   | |  `----.|  |____ .----)   |       |  |     |  |____ |__| |__| |__| 
+    \__/     |_______||__| \__|  \______||_______||_______/        |__|     |_______|(__) (__) (__) 
+                                                                                                    
+
+    """)
+
+# Método com mensagem de derrota   
+def perder():
+    limpa_tela()
+    print(""" 
+          
+     ___        ______      ___      .______     ______    __    __          ___
+    /   \      /      |    /   \     |   _  \   /  __  \  |  |  |  |     _  /  /
+   /  ^  \    |  ,----'   /  ^  \    |  |_)  | |  |  |  | |  |  |  |    (_)|  | 
+  /  /_\  \   |  |       /  /_\  \   |   _  <  |  |  |  | |  |  |  |       |  | 
+ /  _____  \  |  `----. /  _____  \  |  |_)  | |  `--'  | |  `--'  |     _ |  | 
+/__/     \__\  \______|/__/     \__\ |______/   \______/   \______/     (_)|  | 
+                                                                            \__\ 
+
+    """)
+
+# Método que faz 50 parágrafos para limpar a tela
+def limpa_tela():
+    print("\n" * 50)
 
 # Função para definir o tabuleiro
 def criar_tabuleiro(linhas):
     # Criar o tabuleiro como uma lista de listas
     tabuleiro = []
     for x in range(linhas):
-        y = x * 2 + 1  # Função que define a quantidade de colunas que dada linha tem (y = colunas x = linha)
+        y = x * 2 + 1  # Função que define a quantidade de colunas que dada linha tem (y = quantidade de colunas; x = linha)
         linha = [" " for _ in range(y)]  # Inicializa cada linha com espaços
         tabuleiro.append(linha) # Adiciona os valores de cada linha
 
@@ -42,41 +102,13 @@ def imprimir_tabuleiro(tabuleiro):
         espacos = (largura_maxima - largura_linha) // 2  # Calcula espaços para centralizar
         separador = (largura_linha)
         print(" " * espacos + linha_formatada + "|" + "\n" + " " * espacos + "-" * separador) # Para cada linha imprime o número de " " necessários para centralizar
+    return largura_maxima # Devolve para poder fazer separação com os mesmos "-" em outras partes do código
 
-
-
-# Método que faz 50 parágrafos para limpar a tela
-def limpa_tela():
-    print("\n" * 50)
-
-
-
-# Método para criar a capa do início de jogo
-def mostrar_capa():
-    
-    limpa_tela()
-    
-    capa = """
-    ***********************************************
-    *                                             *
-    *          BEM-VINDO AO JOGO!                 *
-    *                                             *
-    ***********************************************
-            ███╗   ██╗ █████╗ ██╗   ██╗███████╗
-            ████╗  ██║██╔══██╗██║   ██║██╔════╝
-            ██╔██╗ ██║███████║██║   ██║█████╗  
-            ██║╚██╗██║██╔══██║╚██╗ ██╔╝██╔══╝  
-            ██║ ╚████║██║  ██║ ╚████╔╝ ███████╗
-            ╚═╝  ╚═══╝╚═╝  ╚═╝  ╚═══╝  ╚══════╝
-    
-    ***********************************************
-    *  Pressione qualquer tecla para começar...   *
-    ***********************************************
-    """
-    print(capa)
-    
-    input() # Aguarda que o utilizador pressione alguma tecla
-
+# Função que devolve o comprimento da string sem cor
+def comprimento_visivel(texto):
+    # Remove códigos ANSI e retorna o comprimento visível
+    texto_sem_cor = re.sub(r'\033\[[0-9;]*m', '', texto) # Remove códigos ANSI
+    return len(texto_sem_cor)
 
 
 # Método inserir as naves dentro do tabuleiro
@@ -115,58 +147,100 @@ def tabuleiro_tiros(tabuleiro):
         colocar_tiro(tabuleiro)
     return tabuleiro
 
-# Método para manter o comprimento normal pós coloração
-def comprimento_visivel(texto):
-    #Remove códigos ANSI e retorna o comprimento visível
-    texto_sem_cor = re.sub(r'\033\[[0-9;]*m', '', texto) # Remove códigos ANSI
-    return len(texto_sem_cor)
 
 # Método para remover a energia
 def remover_energia(tabuleiroNaves, tabuleiroTiros):
+    tiros_acertados = 0
     def percorrer_tabuleiro(tabuleiroNaves, tabuleiroTiros, nave):
+        tiros_certeiros = 0
         for x in range(linhas_tabuleiro):
             h = x * 2 + 1
             for y in range(h):
                 if tabuleiroNaves[x][y] == nave.letra and tabuleiroTiros[x][y] == "X":
-                    nave.perda_energia()                                     
-    for nave in Naves:   
-        percorrer_tabuleiro(tabuleiroNaves, tabuleiroTiros, nave)
-                           
-   
-def jogar(numJogadas, tirosDados):
-    limpa_tela()
+                    tiros_certeiros += 1 # Adiciona tiro caso nave seja atingida
+                    nave.perda_energia()
+        return tiros_certeiros                                                      
      
-    tirosDados+=3
-    
-    tabuleiro = criar_tabuleiro(linhas_tabuleiro)
-    tabuleiro2 = criar_tabuleiro(linhas_tabuleiro)
-    
-    tabuleiroNaves = tabuleiro_naves(tabuleiro)
-    imprimir_tabuleiro(tabuleiroNaves)
-    print("\n")
-    tabuleiroTiros = tabuleiro_tiros(tabuleiro2)
-    imprimir_tabuleiro(tabuleiroTiros)
-    
-    remover_energia(tabuleiroNaves, tabuleiroTiros)
-    
-    print(NaveAtual.Info(Nave1))
-    print(NaveAtual.Info(Nave2))
-    print(NaveAtual.Info(Nave3))
-    print(tirosDados)
-    
-    
-    
-    
-    numJogadas+=1
-    print(numJogadas)
-    
-    if numJogadas < 30:
-        input()
-        jogar(numJogadas, tirosDados)
+    for nave in Naves:     
+        tiros_acertados += percorrer_tabuleiro(tabuleiroNaves, tabuleiroTiros, nave)
+    return tiros_acertados # Devolve quantos tiros foram acertados na ronda
+
+# Método para recomeçar ou fechar o jogo após o término    
+def recomecar():
+    print("Clique 1 para recomeçar, clique 2 para fechar")
+    escolha = input()
+    if escolha == "1":
+        for nave in Naves:
+            nave.energia = 100 # Reseta energia das naves
+        jogar(0,0) # Recomeça o jogo do zero
+    if escolha == "2":
+        exit() # Fecha programa
     else:
-        print("Venceste o jogo!!!")
+        print("Escolha uma opção válida!")
+        recomecar() # Recursividade                       
+
+# Método que executa os métodos criados para fazer o jogo   
+def jogar(tirosDados, totalTirosAcertados):
+    while tirosDados < 105:  # Continua enquanto o jogador não ultrapassa 105 tiros
+        # *** RONDA ***
+        limpa_tela()
+
+        tirosDados += 3 # Contador do total de tiros
+
+        # Declaração dos 2 tabuleiros
+        tabuleiro = criar_tabuleiro(linhas_tabuleiro)
+        tabuleiro2 = criar_tabuleiro(linhas_tabuleiro)
+
+        # Print do tabuleiro com as naves
+        tabuleiroNaves = tabuleiro_naves(tabuleiro)
+        espacos = imprimir_tabuleiro(tabuleiroNaves) # Quantidade de "-" para separar por estética
+        print("\n") # Separação entre tabuleiros
+        # Print do tabuleiro com os tiros
+        tabuleiroTiros = tabuleiro_tiros(tabuleiro2)
+        imprimir_tabuleiro(tabuleiroTiros)
+
+        # Remoção de energia das naves
+        tirosAcertados = remover_energia(tabuleiroNaves, tabuleiroTiros) # Quantos tiros foram acertados na ronda
+        totalTirosAcertados += tirosAcertados # Contador do total de tiros acertados
+
+        # Dados atuais das naves
+        for nave in Naves:
+            print(NaveAtual.Info(nave))
+
+        print("-" * espacos) # Separação estética
+        
+        # Estatísticas
+        Informacao = (f"{Fore.MAGENTA}Tiros dados: {tirosDados}\nTiros acertados: {totalTirosAcertados}(+{(tirosAcertados)})\nEficácia de tiro: {round(totalTirosAcertados * 100 / tirosDados, 2)}%{Fore.RESET}")
+        print(Informacao)
+        
+        # Verifica se o jogador ganhou
+        if all(nave.energia == 0 for nave in Naves):
+            vencer()
+            imprimir_tabuleiro(tabuleiroNaves)
+            imprimir_tabuleiro(tabuleiroTiros)
+            print(Informacao)
+            recomecar() # Jogo terminado pergunta se quer recomeçar
+
+        # Adiciona energia às naves depois de 45 tiros
+        if tirosDados == 45:
+            for nave in Naves:
+                if nave.energia > 0:
+                    nave.Add_Energia()
+        
+        
+        print("-" * espacos) # Separação estética
+        input(f"{Fore.RED}Clique Enter para continuar...{Fore.RESET}") # Começa nova ronda
+        # *** FIM DA RONDA ***
+
+    # Condição de derrota
+    perder()
+    imprimir_tabuleiro(tabuleiroNaves)
+    imprimir_tabuleiro(tabuleiroTiros)
+    print(Informacao)
+    recomecar() # Jogo terminado pergunta se quer recomeçar
+
+        
     
     
-    
-mostrar_capa()  
-jogar(num_jogadas, tiros_dados)
+
+

@@ -5,27 +5,29 @@ from dicionarios import Cores # Dicionário com as cores
 
 # Super classe
 class NaveModelo:
-    def __init__(self, nome, cor, letra):
+    def __init__(self, nome, cor, letra, perdaEnergia):
         self.nome = nome
         self.cor = cor
         self.energia = 100
-        self.perdaEnergia = 10
+        self.perdaEnergia = perdaEnergia
         self.letra = letra
 
     # Método para atualizar a energia
     def perda_energia(self):
         self.energia -= self.perdaEnergia
+        if self.energia < 0:
+            self.energia = 0
         return self.energia
     
     # Método para devolver a informação tratada
     def __str__(self):
-        return f'\n{self.nome} {self.energia}% {self.letra}'
+        return f'Nome: {self.nome} Energia: {self.energia}% Letra: {self.letra}'
 
 # Classe filho
 class NaveAtual(NaveModelo):
-    def __init__(self, nome, cor, letra):
-        super().__init__(nome, cor, letra)
-        self.energiaExtra = 10 # A energia extra vai ser sempre 10
+    def __init__(self, nome, cor, letra, perdaEnergia, energiaExtra):
+        super().__init__(nome, cor, letra, perdaEnergia)
+        self.energiaExtra = energiaExtra 
 
     # Método que devolve a informação do método da super classe com a cor correspondente
     def Info(self):
@@ -42,12 +44,3 @@ class NaveAtual(NaveModelo):
         if self.energia > 100:
             self.energia = 100
         return self.energia
-
-
-skibidi = NaveAtual("skibidi", "RED", "F")
-
-skibidi.perda_energia()
-skibidi.perda_energia()
-skibidi.perda_energia()
-
-print(skibidi.Info())
